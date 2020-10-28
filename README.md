@@ -1,3 +1,2 @@
 # stki
-Ini adalah Tugas 1 Mata Kuliah Temu Kembali Informasi
-Ini ada lah UTS Mata Kuliah  Temu Kembali Informasi
+Tugas Program 1. Program 2, UTS, dan Program 3
