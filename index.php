@@ -28,6 +28,14 @@ h2 {
 <a href="idf.php">Invers Document Frequency</a> |
 <a href="tfidf.php">TF.IDF</a> |
 <a href="search1.php">Search</a> |
+<a href="search2.php">Search 2</a> |
+<a href="search3.php">Search3</a> |
+<a href="searchjaccard.php">Jaccard 1</a>|
+<a href="searchjaccard2.php">Jaccard 2</a>|
+<a href="searchjaccard3.php">Jaccard 3</a>|
+<a href="searchnei&li.php">Nei&li 1</a>|
+<a href="searchnei&li2.php">Nei&li 2</a>|
+<a href="searchnei&li3.php">Nei&li 3</a>|
 </div>
 <hr/>
 </body>

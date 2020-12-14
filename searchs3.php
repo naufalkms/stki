@@ -30,7 +30,7 @@ $keyword = $_GET["keyword"]; // ambil keyword
    
 	// tampilkan kotak pencarian dan jumlah hasil pencarian
 
-	  echo "<br /><br><table><tr><td></td><td><form action='searchs1.php' method='GET'><input type='text' onclick=value='' size='50' name='keyword' value='$keyword' style='width: 500px; height: 30px; font-size: 16px;'> <input type='submit' value='Search'></form></td></tr></table>";
+	  echo "<br /><br><table><tr><td></td><td><form action='searchs3.php' method='GET'><input type='text' onclick=value='' size='50' name='keyword' value='$keyword' style='width: 500px; height: 30px; font-size: 16px;'> <input type='submit' value='Search'></form></td></tr></table>";
     
     
 // select distinct utk mengambil berita agar tdk duplikasi
@@ -58,7 +58,7 @@ $keyword = $_GET["keyword"]; // ambil keyword
 
 
 //$query="select * from (SELECT g.id id,g.kata kata,g.freq,g.jmlkata,g.tf tf,h.jmldok,h.katajmldok,h.idf idf,(g.tf*h.idf) tf_idf from (SELECT a.id,a.kata,a.freq,b.jmlkata,(a.freq/b.jmlkata) tf FROM (SELECT id,kata,SUM(freq) freq FROM token GROUP BY id,kata ORDER BY id+0,NO+0) AS a JOIN (SELECT id,SUM(freq) jmlkata FROM token GROUP BY id+0) AS b ON a.id=b.id) AS g JOIN (SELECT kata,f.jmldok,e.katajmldok,LOG10(f.jmldok/e.katajmldok) idf FROM (SELECT kata,COUNT(kata) katajmldok FROM (SELECT id,no,kata,SUM(freq) freq FROM token GROUP BY id,kata ORDER BY id+0,NO+0) AS d GROUP BY kata ORDER BY id+0,NO+0) AS e JOIN (SELECT COUNT(id) jmldok FROM (SELECT id FROM token GROUP BY id+0) AS c) AS f) AS h ON g.kata=h.kata) as x where $construct order by tf_idf DESC";
-$query="SELECT id,judul,isi,url FROM (SELECT yy.id id,yy.judul judul,yy.isi isi,yy.url url,xx.kata,xx.freq,xx.jmlkata,xx.tf,xx.jmldok,xx.katajmldok,xx.idf,max(xx.tf_idf) tf_idf from (SELECT * FROM (SELECT g.id id,g.kata kata,g.freq,g.jmlkata,g.tf tf,h.jmldok,h.katajmldok,h.idf idf,(g.tf*h.idf) tf_idf from (SELECT a.id,a.kata,a.freq,b.jmlkata,(a.freq/b.jmlkata) tf FROM (SELECT id,kata,SUM(freq) freq FROM token GROUP BY id,kata ORDER BY id+0,NO+0) AS a JOIN (SELECT id,SUM(freq) jmlkata FROM token GROUP BY id+0) AS b ON a.id=b.id) AS g JOIN (SELECT kata,f.jmldok,e.katajmldok,LOG10(f.jmldok/e.katajmldok) idf FROM (SELECT kata,COUNT(kata) katajmldok FROM (SELECT id,no,kata,SUM(freq) freq FROM token GROUP BY id,kata ORDER BY id+0,NO+0) AS d GROUP BY kata ORDER BY id+0,NO+0) AS e JOIN (SELECT COUNT(id) jmldok FROM (SELECT id FROM token GROUP BY id+0) AS c) AS f) AS h ON g.kata=h.kata) as x where $construct order by tf_idf DESC) AS xx left JOIN (SELECT * FROM berita) AS yy ON xx.id=yy.id group by id) AS zz ORDER BY tf_idf desc"; 
+$query="SELECT y.id,z.judul,z.isi,z.url,y.tf_idf FROM (SELECT * FROM (SELECT g.id id,g.kata kata,g.freq,g.jmlkata,g.tf tf,h.jmldok,h.katajmldok,h.idf idf,(g.tf*h.idf) tf_idf from (SELECT a.id,a.kata,a.freq,b.jmlkata,(a.freq/b.jmlkata) tf FROM (SELECT id,kata,SUM(freq) freq FROM token GROUP BY id,kata ORDER BY id+0,NO+0) AS a JOIN (SELECT id,SUM(freq) jmlkata FROM token GROUP BY id+0) AS b ON a.id=b.id) AS g JOIN (SELECT kata,f.jmldok,e.katajmldok,LOG10(f.jmldok/e.katajmldok) idf FROM (SELECT kata,COUNT(kata) katajmldok FROM (SELECT id,no,kata,SUM(freq) freq FROM token GROUP BY id,kata ORDER BY id+0,NO+0) AS d GROUP BY kata ORDER BY id+0,NO+0) AS e JOIN (SELECT COUNT(id) jmldok FROM (SELECT id FROM token GROUP BY id+0) AS c) AS f) AS h ON g.kata=h.kata) AS s WHERE $construct ORDER BY tf_idf DESC) AS y INNER JOIN (SELECT * FROM berita) AS z ON y.id=z.id";
 $result=mysqli_query($koneksi,$query);
 $numrows=mysqli_num_rows($result);
 $no=1;
@@ -72,6 +72,8 @@ echo "<td><font color=blue></font>" . " $row[id] " . "<br></td>"; */
 echo "<tr><td><font color=black>" . " $row[url] " . "</font></td></tr>"; 
 echo "<tr><td><a href=$row[url] target=_blank><font size=5color=blue face=Arial>" . " $row[judul] " . "</a></font></td></tr>"; 
 echo "<tr><td><font color=black>" . " $row[isi] " . "</font></td></tr>"; 
+echo "<tr><td><font color=blue></font>TFIDF : " . " $row[tf_idf] " . "<br><br></td></tr>";
+// echo "<tr><td><font color=blue></font>Penilaian : " . " <img src='images/bintang.png' width='20' height='20'   " . "<br><br></td></tr>";
 //echo "</tr>";
 $no++;
 }
